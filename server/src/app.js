@@ -1,8 +1,9 @@
+require("dotenv").config();
+require("./middlewares/github");
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
-require("dotenv").config();
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(passport.session());
 
 // Routes
 app.use("/api", require("./routes/index"));
+app.use("/auth", require("./routes/auth"));
 
 // Server
 const PORT = process.env.PORT || 3001;
