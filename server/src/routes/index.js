@@ -1,8 +1,8 @@
-const { Router } = require("express");
-const router = Router();
+const express = require("express");
+const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({ message: "Welcome to the API" });
-});
+router.use("/auth", require("./auth"));
+router.use("/api/posts", require("./posts"));
+router.use("/api/users", require("./users"));
 
 module.exports = router;
