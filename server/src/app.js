@@ -29,6 +29,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+if (process.env.NODE_ENV === "development") {
+  app.use((req, res, next) => {
+    if (!req.user) {
+      req.user = { id: "cmb6u32oo0000s81uzu0ziyw1" };
+    }
+    next();
+  });
+}
 app.use(require("./routes/index"));
 
 // Server
