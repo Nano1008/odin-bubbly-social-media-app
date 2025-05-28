@@ -15,15 +15,23 @@ router.get(
   "/github/callback",
   passport.authenticate("github", {
     failureRedirect: "/",
-    successRedirect: "/",
+    successRedirect: "/api",
   })
 );
 
 // Logout route
 router.get("/logout", (req, res) => {
   req.logout((err) => {
-    res.redirect("/");
+    res.json({ message: "Logged out successfully" });
   });
+});
+
+// Get current user route
+router.get("/current_user", (req, res) => {
+  if (req.user) {
+    return res.json(req.user);
+  }
+  return res.status(401).json({ message: "Unauthorized" });
 });
 
 module.exports = router;
