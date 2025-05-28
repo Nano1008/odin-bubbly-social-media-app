@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import User from "@/components/User";
 
 export default function UsersPage() {
   const users = [
@@ -45,18 +45,11 @@ export default function UsersPage() {
             key={user.id}
             className="flex justify-between items-center p-4 bg-white rounded-xl shadow"
           >
-            <div className="flex items-center gap-3">
-              <Image
-                width={40}
-                height={40}
-                src={user.profilePicture}
-                alt=""
-                className="w-10 h-10 rounded-full"
-              />
-              <span className="font-semibold text-gray-700">
-                {user.name || user.username}
-              </span>
-            </div>
+            <User
+              profilePicture={user.profilePicture}
+              name={user.name}
+              username={user.username}
+            />
             {getFollowButton(user.status)}
           </li>
         ))}
