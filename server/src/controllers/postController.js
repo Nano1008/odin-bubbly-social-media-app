@@ -95,8 +95,36 @@ const likePost = async (req, res) => {
   }
 };
 
+const commentOnPost = async (req, res) => {
+  const { content } = req.body;
+  const postId = req.params.id;
+  const userId = req.user.id;
+
+  if (!content) {
+    return res.status(400).json({ error: "Content is required" });
+  }
+
+  try {
+    const comment = await prisma.comment.create({
+      data: {
+        content,
+        postId,
+        authorId: userId,
+      },
+      include: {
+        author: true, // Include author details in the response
+      },
+    });
+    res.status(201).json({ message: "Comment added successfully", comment });
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    res.status(500).json({ error: "Failed to add comment" });
+  }
+};
+
 module.exports = {
   createPost,
   getFeed,
   likePost,
+  commentOnPost
 };
