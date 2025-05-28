@@ -1,8 +1,9 @@
 const express = require("express");
 const requireAuth = require("../middlewares/requireAuth");
+const postController = require("../controllers/postController");
 const router = express.Router();
 
-router.post("/", requireAuth /* createPost */);
+router.post("/", requireAuth, postController.createPost);
 router.get("/feed", requireAuth /* getFeed */);
 router.post("/:id/like", requireAuth /* likePost */);
 router.post("/:id/comment", requireAuth /* commentPost */);
