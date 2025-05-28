@@ -4,9 +4,13 @@ function Home() {
   const posts = [
     {
       id: "1",
-      author: { name: "Alice", profileImage: "https://example.com/avatar.jpg" },
+      author: {
+        name: "Alice",
+        profilePicture:
+          "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/48.jpg",
+      },
       content: "Hello, world!",
-      imageUrl: "https://example.com/image.jpg",
+      imageUrl: "https://picsum.photos/seed/L4GAz/205/1117?grayscale",
       likes: [{}, {}, {}],
       comments: [{}, {}],
       createdAt: "2025-05-28T20:10:00.000Z",

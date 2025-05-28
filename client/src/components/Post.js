@@ -14,13 +14,13 @@ export default function Post({
       {/* Header: Author Info + Time */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center">
-          {/* <Image
+          <Image
             width={40}
             height={40}
-            src={author.profileImage || "https://via.placeholder.com/40"}
+            src={author.profilePicture || "https://via.placeholder.com/40"}
             alt={author.name}
             className="w-10 h-10 rounded-full mr-3"
-          /> */}
+          />
           <span className="font-semibold text-gray-700">{author.name}</span>
         </div>
         <span className="text-sm text-gray-400">
@@ -34,8 +34,8 @@ export default function Post({
       {/* Optional Image */}
       {/* {imageUrl && (
         <Image
-          width={600}
-          height={400}
+          width={60}
+          height={40}
           src={imageUrl}
           alt="Post visual"
           className="rounded-xl mb-4 max-h-96 w-full object-cover"
