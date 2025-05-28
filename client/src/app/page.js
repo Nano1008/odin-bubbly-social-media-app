@@ -4,17 +4,12 @@ function Home() {
   const posts = [
     {
       id: "1",
-      authorId: "1",
+      author: { name: "Alice", profileImage: "https://example.com/avatar.jpg" },
       content: "Hello, world!",
-      likes: 3,
-      comments: 1,
-    },
-    {
-      id: "2",
-      authorId: "1",
-      content: "This is my second post!",
-      likes: 5,
-      comments: 2,
+      imageUrl: "https://example.com/image.jpg",
+      likes: [{}, {}, {}],
+      comments: [{}, {}],
+      createdAt: "2025-05-28T20:10:00.000Z",
     },
   ];
 
@@ -24,10 +19,12 @@ function Home() {
       {posts.map((post) => (
         <Post
           key={post.id}
-          authorId={post.authorId}
+          author={post.author}
           content={post.content}
+          imageUrl={post.imageUrl}
           likes={post.likes}
           comments={post.comments}
+          createdAt={post.createdAt}
         />
       ))}
     </div>
