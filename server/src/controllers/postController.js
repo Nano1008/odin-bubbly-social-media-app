@@ -20,6 +20,44 @@ const createPost = async (req, res) => {
   }
 };
 
+// Return a list of posts by users the current user follows
+const getFeed = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    // Get the IDs of users the current user follows
+    const following = await prisma.follow.findMany({
+      where: { followerId: userId },
+      select: { followingId: true },
+    });
+
+    const followingIds = following.map((follow) => follow.followingId);
+
+    // Fetch posts from followed users
+    const posts = await prisma.post.findMany({
+      where: {
+        authorId: { in: followingIds },
+      },
+      orderBy: {
+        createdAt: "desc", // Order by creation date, most recent first
+      },
+      include: {
+        author: true,
+        likes: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        },
+      },
+    });
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error("Error fetching feed:", error);
+    res.status(500).json({ error: "Failed to fetch feed" });
+  }
+};
+
 module.exports = {
   createPost,
+  getFeed,
 };
