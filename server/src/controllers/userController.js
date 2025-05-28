@@ -11,6 +11,67 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Can't fetch user" });
+  }
+};
+
+// Toggle follow user
+const followUser = async (req, res) => {
+  const followingId = req.params.id;
+  const followerId = req.user.id;
+
+  // Check if the user is trying to follow themselves
+  if (followingId === followerId) {
+    return res.status(400).json({ error: "You cannot follow yourself" });
+  }
+
+  try {
+    // Check if the user is already following
+    const existingFollow = await prisma.follow.findFirst({
+      where: {
+        followingId,
+        followerId,
+      },
+    });
+    if (existingFollow) {
+      // If already following, unfollow
+      await prisma.follow.delete({
+        where: {
+          id: existingFollow.id,
+        },
+      });
+      return res.status(200).json({ message: "Unfollowed user" });
+    } else {
+      // If not following, follow the user
+      await prisma.follow.create({
+        data: {
+          followingId,
+          followerId,
+          status: "accepted",
+        },
+      });
+      return res.status(200).json({ message: "Followed user" });
+    }
+  } catch (error) {
+    console.error("Error following user:", error);
+    res.status(500).json({ error: "Can't follow user" });
+  }
+};
+
 module.exports = {
   getAllUsers,
+  getUserById,
+  followUser,
 };
