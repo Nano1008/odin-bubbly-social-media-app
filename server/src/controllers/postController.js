@@ -57,7 +57,46 @@ const getFeed = async (req, res) => {
   }
 };
 
+// Toggle like on a post
+const likePost = async (req, res) => {
+  const postId = req.params.id;
+  const userId = req.user.id;
+
+  try {
+    // Check if the user has already liked the post
+    const existingLike = await prisma.like.findFirst({
+      where: {
+        postId: postId,
+        userId: userId,
+      },
+    });
+    if (existingLike) {
+      // If the like exists, remove it
+      const likeId = existingLike.id;
+      await prisma.like.delete({
+        where: {
+          id: likeId,
+        },
+      });
+      return res.status(200).json({ message: "Post unliked successfully" });
+    } else {
+      // If the like does not exist, create it
+      await prisma.like.create({
+        data: {
+          postId,
+          userId,
+        },
+      });
+      return res.status(201).json({ message: "Post liked successfully" });
+    }
+  } catch (error) {
+    console.error("Error liking post:", error);
+    res.status(500).json({ error: "Failed to like post" });
+  }
+};
+
 module.exports = {
   createPost,
   getFeed,
+  likePost,
 };
