@@ -2,7 +2,7 @@
 require("dotenv").config();
 const GithubStrategy = require("passport-github2").Strategy;
 const passport = require("passport");
-const { PrismaClient } = require("../../../generated/prisma");
+const { PrismaClient } = require("../../generated/prisma");
 
 const prisma = new PrismaClient();
 
