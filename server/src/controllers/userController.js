@@ -52,17 +52,16 @@ const followUser = async (req, res) => {
           id: existingFollow.id,
         },
       });
-      return res.status(200).json({ message: "Unfollowed user" });
+      return res.status(200).json({ followed: false });
     } else {
       // If not following, follow the user
       await prisma.follow.create({
         data: {
           followingId,
           followerId,
-          status: "accepted",
         },
       });
-      return res.status(200).json({ message: "Followed user" });
+      return res.status(200).json({ followed: true });
     }
   } catch (error) {
     console.error("Error following user:", error);
