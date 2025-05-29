@@ -32,15 +32,11 @@ app.use(passport.session());
 if (process.env.NODE_ENV === "development") {
   app.use((req, res, next) => {
     if (!req.user) {
-      req.user = { id: "cmb6u32oo0000s81uzu0ziyw1" };
+      req.user = { id: "cmb6u33050005s81u7zddgwwl" };
     }
     next();
   });
 }
 app.use(require("./routes/index"));
 
-// Server
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;
