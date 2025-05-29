@@ -50,7 +50,20 @@ const getFeed = async (req, res) => {
         },
       },
     });
-    res.status(200).json(posts);
+
+    // Add likedByCurrentUser field to each post
+    const postsWithLikes = posts.map((post) => {
+      const likedByCurrentUser = post.likes.some(
+        (like) => like.userId === userId
+      );
+      return {
+        ...post,
+        likedByCurrentUser,
+      };
+    });
+
+    // Return the posts
+    res.status(200).json(postsWithLikes);
   } catch (error) {
     console.error("Error fetching feed:", error);
     res.status(500).json({ error: "Failed to fetch feed" });
@@ -70,15 +83,14 @@ const likePost = async (req, res) => {
         userId: userId,
       },
     });
+
     if (existingLike) {
       // If the like exists, remove it
-      const likeId = existingLike.id;
       await prisma.like.delete({
         where: {
-          id: likeId,
+          id: existingLike.id,
         },
       });
-      return res.status(200).json({ message: "Post unliked successfully" });
     } else {
       // If the like does not exist, create it
       await prisma.like.create({
@@ -87,8 +99,14 @@ const likePost = async (req, res) => {
           userId,
         },
       });
-      return res.status(201).json({ message: "Post liked successfully" });
     }
+
+    // Get new like count
+    const likesCount = await prisma.like.count({
+      where: { postId },
+    });
+
+    return res.status(200).json({ likesCount });
   } catch (error) {
     console.error("Error liking post:", error);
     res.status(500).json({ error: "Failed to like post" });
@@ -126,5 +144,5 @@ module.exports = {
   createPost,
   getFeed,
   likePost,
-  commentOnPost
+  commentOnPost,
 };

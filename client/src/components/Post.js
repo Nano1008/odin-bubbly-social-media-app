@@ -1,14 +1,32 @@
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
+import { useState } from "react";
 
-export default function Post({
+function Post({
+  id,
   author,
   content,
   imageUrl,
   likes,
   comments,
   createdAt,
+  likedByCurrentUser,
 }) {
+  const [likesCount, setLikesCount] = useState(likes.length);
+  const [liked, setLiked] = useState(likedByCurrentUser);
+
+  const handleLike = async () => {
+    const res = await fetch(`http://localhost:3001/api/posts/${id}/like`, {
+      method: "POST",
+      credentials: "include",
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setLikesCount(data.likesCount);
+      setLiked((prev) => !prev);
+    }
+  };
+
   return (
     <div className="bg-white p-6 rounded-2xl shadow">
       {/* Header: Author Info + Time */}
@@ -31,22 +49,16 @@ export default function Post({
       {/* Content */}
       <p className="text-gray-800 mb-4 whitespace-pre-wrap">{content}</p>
 
-      {/* Optional Image */}
-      {/* {imageUrl && (
-        <Image
-          width={60}
-          height={40}
-          src={imageUrl}
-          alt="Post visual"
-          className="rounded-xl mb-4 max-h-96 w-full object-cover"
-        />
-      )} */}
+      {/* Likes and Comments */}
+      <div className="flex justify-between text-sm text-gray-500">
+        <button onClick={handleLike}>
+          {liked ? "❤️" : "🤍"} {likesCount}
+        </button>
 
-      {/* Footer: Likes and Comments */}
-      <div className="text-sm text-gray-500 flex gap-4">
-        <span>❤️ {likes.length}</span>
-        <span>💬 {comments.length}</span>
+        <span>{comments.length} comments</span>
       </div>
     </div>
   );
 }
+
+export default Post;
