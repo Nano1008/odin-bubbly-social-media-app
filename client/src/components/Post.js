@@ -83,7 +83,7 @@ function Post({
         </button>
 
         <button onClick={handleExistingComment}>
-          {comments.length} comments
+          {commentsList.length} comments
         </button>
       </div>
 
