@@ -18,8 +18,8 @@ model User {
   posts          Post[]
   comments       Comment[]
   likes          Like[]
-  followers      Follow[] @relation("UserFollowers")
-  following      Follow[] @relation("UserFollowing")
+  followers      Follow[]  @relation("UserFollowers")
+  following      Follow[]  @relation("UserFollowing")
   createdAt      DateTime  @default(now())
 }
 
@@ -55,11 +55,11 @@ model Like {
 
 // Each row means "user with followerId is following user with followingId."
 model Follow {
-  id           String   @id @default(cuid())
-  follower     User     @relation("UserFollowing", fields: [followerId], references: [id])
-  followerId   String
-  following    User     @relation("UserFollowers", fields: [followingId], references: [id])
-  followingId  String
-  status       String   // pending, accepted
-  createdAt    DateTime @default(now())
+  id          String   @id @default(cuid())
+  follower    User     @relation("UserFollowing", fields: [followerId], references: [id])
+  followerId  String
+  following   User     @relation("UserFollowers", fields: [followingId], references: [id])
+  followingId String
+  status      String // pending, accepted
+  createdAt   DateTime @default(now())
 }
