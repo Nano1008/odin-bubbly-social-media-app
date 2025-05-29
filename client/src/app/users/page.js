@@ -1,38 +1,50 @@
 "use client";
+import { useEffect, useState } from "react";
 import User from "@/components/User";
 import Header from "@/components/Header";
 
 export default function UsersPage() {
-  const users = [
-    {
-      id: "1",
-      name: "Alice",
-      username: "alice",
-      profilePicture:
-        "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/48.jpg",
-      status: "not_following", // or 'following', 'pending'
-    },
-    {
-      id: "2",
-      name: "Bob",
-      username: "bob",
-      profilePicture:
-        "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/48.jpg",
-      status: "following",
-    },
-  ];
+  const [users, setUsers] = useState([]);
 
-  const getFollowButton = (status) => {
-    if (status === "following")
-      return <span className="text-green-600">Following</span>;
-    return (
-      <button
-        className="text-blue-500 hover:underline"
-        onClick={() => alert("Follow clicked")}
-      >
-        Follow
-      </button>
-    );
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/users");
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  const handleFollow = async (userId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/users/follow/${userId}`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to follow/unfollow user");
+      }
+      const data = await response.json();
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === userId
+            ? { ...user, status: data.followed ? "following" : "not following" }
+            : user
+        )
+      );
+    } catch (error) {
+      console.error("Error toggling follow status:", error);
+    }
   };
 
   return (
@@ -51,7 +63,12 @@ export default function UsersPage() {
                 name={user.name}
                 username={user.username}
               />
-              {getFollowButton(user.status)}
+              <button
+                className="text-sm text-blue-500 hover:underline"
+                onClick={() => handleFollow(user.id)}
+              >
+                {user.status === "following" ? "Unfollow" : "Follow"}
+              </button>
             </li>
           ))}
         </ul>

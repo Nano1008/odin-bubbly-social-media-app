@@ -3,8 +3,31 @@ const prisma = new PrismaClient();
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
-    res.status(200).json(users);
+    // Exclude the current user from the list
+    const currentUserId = req.user.id;
+    const users = await prisma.user.findMany({
+      where: {
+        id: {
+          not: currentUserId,
+        },
+      },
+      include: {
+        followers: true,
+      },
+    });
+
+    // Add follow status for each user
+    const usersWithFollowStatus = users.map((user) => {
+      return {
+        ...user,
+        status: user.followers.some(
+          (follower) => follower.followerId === currentUserId
+        )
+          ? "following"
+          : "not following",
+      };
+    });
+    res.status(200).json(usersWithFollowStatus);
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ error: "Can't fetch users" });
