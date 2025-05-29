@@ -24,8 +24,6 @@ export default function UsersPage() {
   const getFollowButton = (status) => {
     if (status === "following")
       return <span className="text-green-600">Following</span>;
-    if (status === "pending")
-      return <span className="text-yellow-600">Pending</span>;
     return (
       <button
         className="text-blue-500 hover:underline"
