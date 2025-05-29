@@ -1,5 +1,5 @@
 // Github OAuth Strategy Configuration using Passport.js
-require("dotenv").config();
+require("dotenv").config({path: require("path").resolve(__dirname, "../.env")});
 const GithubStrategy = require("passport-github2").Strategy;
 const passport = require("passport");
 const { PrismaClient } = require("../../generated/prisma");

@@ -5,7 +5,7 @@ const requireAuth = (req, res, next) => {
   }
 
   // If not authenticated, redirect to the login page
-  res.redirect("/login");
+  res.send("Did not login.");
 };
 
 module.exports = requireAuth;
