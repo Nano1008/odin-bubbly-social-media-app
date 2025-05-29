@@ -60,6 +60,5 @@ model Follow {
   followerId  String
   following   User     @relation("UserFollowers", fields: [followingId], references: [id])
   followingId String
-  status      String // pending, accepted
   createdAt   DateTime @default(now())
 }

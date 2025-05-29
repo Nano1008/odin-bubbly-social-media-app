@@ -157,7 +157,6 @@ exports.Prisma.FollowScalarFieldEnum = {
   id: 'id',
   followerId: 'followerId',
   followingId: 'followingId',
-  status: 'status',
   createdAt: 'createdAt'
 };
 
