@@ -47,6 +47,9 @@ const getFeed = async (req, res) => {
           include: {
             author: true,
           },
+          orderBy: {
+            createdAt: "desc", // Order comments by creation date
+          },
         },
       },
     });
@@ -133,7 +136,7 @@ const commentOnPost = async (req, res) => {
         author: true, // Include author details in the response
       },
     });
-    res.status(201).json({ message: "Comment added successfully", comment });
+    res.status(201).json({ comment });
   } catch (error) {
     console.error("Error adding comment:", error);
     res.status(500).json({ error: "Failed to add comment" });

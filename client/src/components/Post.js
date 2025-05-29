@@ -14,6 +14,9 @@ function Post({
 }) {
   const [likesCount, setLikesCount] = useState(likes.length);
   const [liked, setLiked] = useState(likedByCurrentUser);
+  const [displayComments, setDisplayComments] = useState(false);
+  const [commentInput, setCommentInput] = useState("");
+  const [commentsList, setCommentsList] = useState(comments);
 
   const handleLike = async () => {
     const res = await fetch(`http://localhost:3001/api/posts/${id}/like`, {
@@ -24,6 +27,30 @@ function Post({
       const data = await res.json();
       setLikesCount(data.likesCount);
       setLiked((prev) => !prev);
+    }
+  };
+
+  const handleExistingComment = () => {
+    setDisplayComments((prev) => !prev);
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!commentInput.trim()) return;
+
+    const res = await fetch(`http://localhost:3001/api/posts/${id}/comment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content: commentInput }),
+      credentials: "include",
+    });
+
+    if (res.ok) {
+      const newComment = await res.json();
+      setCommentsList((prev) => [newComment.comment, ...prev]);
+      setCommentInput("");
     }
   };
 
@@ -55,8 +82,45 @@ function Post({
           {liked ? "❤️" : "🤍"} {likesCount}
         </button>
 
-        <span>{comments.length} comments</span>
+        <button onClick={handleExistingComment}>
+          {comments.length} comments
+        </button>
       </div>
+
+      {displayComments &&
+        commentsList.map((comment) => (
+          <div
+            key={comment.id}
+            className="flex items-center gap-2 text-sm mt-2"
+          >
+            <Image
+              src={comment.author.profilePicture}
+              alt="Comment Author"
+              width={24}
+              height={24}
+              className="w-6 h-6 rounded-full"
+            />
+            <div>
+              <strong>{comment.author.username}</strong> {comment.content}{" "}
+              {formatDistanceToNow(new Date(comment.createdAt), {
+                addSuffix: true,
+              })}
+            </div>
+          </div>
+        ))}
+
+      {/* Comment Section */}
+      <form onSubmit={handleCommentSubmit} className="flex gap-2 mt-2">
+        <input
+          value={commentInput}
+          onChange={(e) => setCommentInput(e.target.value)}
+          placeholder="Write a comment..."
+          className="flex-1 border rounded px-2 py-1 text-sm"
+        />
+        <button type="submit" className="text-blue-500 text-sm">
+          Post
+        </button>
+      </form>
     </div>
   );
 }
