@@ -1,5 +1,6 @@
 "use client";
 import User from "@/components/User";
+import Header from "@/components/Header";
 
 export default function UsersPage() {
   const users = [
@@ -35,23 +36,26 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Users</h1>
-      <ul className="space-y-4">
-        {users.map((user) => (
-          <li
-            key={user.id}
-            className="flex justify-between items-center p-4 bg-white rounded-xl shadow"
-          >
-            <User
-              profilePicture={user.profilePicture}
-              name={user.name}
-              username={user.username}
-            />
-            {getFollowButton(user.status)}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <Header />
+      <div className="max-w-xl mx-auto mt-10">
+        <h1 className="text-2xl font-bold mb-6 text-gray-800">Users</h1>
+        <ul className="space-y-4">
+          {users.map((user) => (
+            <li
+              key={user.id}
+              className="flex justify-between items-center p-4 bg-white rounded-xl shadow"
+            >
+              <User
+                profilePicture={user.profilePicture}
+                name={user.name}
+                username={user.username}
+              />
+              {getFollowButton(user.status)}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }

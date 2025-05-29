@@ -1,4 +1,5 @@
 import Post from "@/components/Post";
+import Header from "@/components/Header";
 
 function Home() {
   const posts = [
@@ -18,20 +19,23 @@ function Home() {
   ];
 
   return (
-    <div className="max-w-xl mx-auto mt-10 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">Your Feed</h1>
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          author={post.author}
-          content={post.content}
-          imageUrl={post.imageUrl}
-          likes={post.likes}
-          comments={post.comments}
-          createdAt={post.createdAt}
-        />
-      ))}
-    </div>
+    <>
+      <Header />
+      <div className="max-w-xl mx-auto mt-10 space-y-6">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">Your Feed</h1>
+        {posts.map((post) => (
+          <Post
+            key={post.id}
+            author={post.author}
+            content={post.content}
+            imageUrl={post.imageUrl}
+            likes={post.likes}
+            comments={post.comments}
+            createdAt={post.createdAt}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 

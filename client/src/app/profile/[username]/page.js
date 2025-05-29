@@ -1,4 +1,5 @@
 import Post from "@/components/Post";
+import Header from "@/components/Header";
 import Image from "next/image";
 
 export default async function ProfilePage({ params }) {
@@ -25,32 +26,35 @@ export default async function ProfilePage({ params }) {
   ];
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 space-y-6">
-      <div className="flex items-center gap-4">
-        <Image
-          width={80}
-          height={80}
-          src={user.profilePicture}
-          alt=""
-          className="w-20 h-20 rounded-full"
-        />
-        <div>
-          <h2 className="text-2xl font-bold">{user.name || user.username}</h2>
-          <p className="text-gray-500 text-sm">
-            Joined {new Date(user.createdAt).toLocaleDateString()}
-          </p>
-          <p className="text-sm text-gray-600">
-            {user.followers.length} followers · {user.following.length}{" "}
-            following
-          </p>
+    <>
+      <Header />
+      <div className="max-w-2xl mx-auto mt-10 space-y-6">
+        <div className="flex items-center gap-4">
+          <Image
+            width={80}
+            height={80}
+            src={user.profilePicture}
+            alt=""
+            className="w-20 h-20 rounded-full"
+          />
+          <div>
+            <h2 className="text-2xl font-bold">{user.name || user.username}</h2>
+            <p className="text-gray-500 text-sm">
+              Joined {new Date(user.createdAt).toLocaleDateString()}
+            </p>
+            <p className="text-sm text-gray-600">
+              {user.followers.length} followers · {user.following.length}{" "}
+              following
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {posts.map((post) => (
+            <Post key={post.id} {...post} />
+          ))}
         </div>
       </div>
-
-      <div className="space-y-4">
-        {posts.map((post) => (
-          <Post key={post.id} {...post} />
-        ))}
-      </div>
-    </div>
+    </>
   );
 }
