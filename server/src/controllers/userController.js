@@ -51,9 +51,13 @@ const getUserById = async (req, res) => {
             author: true,
             likes: true,
             comments: {
+              orderBy: {
+                createdAt: "desc", // Order comments by creation date
+              },
               include: {
-                author: true,}
-            }
+                author: true,
+              },
+            },
           },
         },
       },
