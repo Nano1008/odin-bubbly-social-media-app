@@ -59,6 +59,7 @@ export default function UsersPage() {
               className="flex justify-between items-center p-4 bg-white rounded-xl shadow"
             >
               <User
+                id={user.id}
                 profilePicture={user.profilePicture}
                 name={user.name}
                 username={user.username}
