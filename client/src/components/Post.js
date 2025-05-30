@@ -12,6 +12,7 @@ function Post({
   createdAt,
   likedByCurrentUser,
 }) {
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const [likesCount, setLikesCount] = useState(likes.length);
   const [liked, setLiked] = useState(likedByCurrentUser);
   const [displayComments, setDisplayComments] = useState(false);
@@ -19,7 +20,7 @@ function Post({
   const [commentsList, setCommentsList] = useState(comments);
 
   const handleLike = async () => {
-    const res = await fetch(`http://localhost:3001/api/posts/${id}/like`, {
+    const res = await fetch(`${API_BASE_URL}/api/posts/${id}/like`, {
       method: "POST",
       credentials: "include",
     });
@@ -38,7 +39,7 @@ function Post({
     e.preventDefault();
     if (!commentInput.trim()) return;
 
-    const res = await fetch(`http://localhost:3001/api/posts/${id}/comment`, {
+    const res = await fetch(`${API_BASE_URL}/api/posts/${id}/comment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -101,7 +102,8 @@ function Post({
               className="w-6 h-6 rounded-full"
             />
             <div>
-              <strong>{comment.author.username}</strong> {comment.content}{" "}
+              <strong>{comment.author.name || comment.author.username}</strong>{" "}
+              {comment.content}{" "}
               {formatDistanceToNow(new Date(comment.createdAt), {
                 addSuffix: true,
               })}

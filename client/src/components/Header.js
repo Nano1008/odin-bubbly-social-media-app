@@ -3,18 +3,16 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 function Header() {
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     // Check if user is authenticated
     const checkAuth = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:3001/auth/current_user",
-          {
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`${API_BASE_URL}/auth/current_user`, {
+          credentials: "include",
+        });
         if (!response.ok) {
           throw new Error("Not authenticated");
         }
@@ -27,7 +25,7 @@ function Header() {
     };
 
     checkAuth();
-  }, []);
+  }, [API_BASE_URL]);
 
   const handleLogout = () => {
     // Implement logout logic here, e.g., clear session, redirect to login

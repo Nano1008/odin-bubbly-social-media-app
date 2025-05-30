@@ -5,12 +5,13 @@ import Header from "@/components/Header";
 import { useEffect, useState } from "react";
 
 function Home() {
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/posts/feed");
+        const response = await fetch(`${API_BASE_URL}/api/posts/feed`);
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
         }
@@ -22,7 +23,7 @@ function Home() {
     };
 
     fetchPosts();
-  }, []);
+  }, [API_BASE_URL]);
 
   return (
     <>

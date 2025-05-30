@@ -1,9 +1,10 @@
 "use client";
 
 function SignInPage() {
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const handleSignIn = () => {
     // Redirect to the GitHub OAuth URL
-    window.location.href = "http://localhost:3001/auth/github";
+    window.location.href = `${API_BASE_URL}/auth/github`;
   };
 
   return (

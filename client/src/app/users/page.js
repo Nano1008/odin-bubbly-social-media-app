@@ -4,12 +4,13 @@ import User from "@/components/User";
 import Header from "@/components/Header";
 
 export default function UsersPage() {
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/users");
+        const response = await fetch(`${API_BASE_URL}/api/users`);
         if (!response.ok) {
           throw new Error("Failed to fetch users");
         }
@@ -20,12 +21,12 @@ export default function UsersPage() {
       }
     };
     fetchUsers();
-  }, []);
+  }, [API_BASE_URL]);
 
   const handleFollow = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/users/follow/${userId}`,
+        `${API_BASE_URL}/api/users/follow/${userId}`,
         {
           method: "POST",
           credentials: "include",
@@ -51,7 +52,6 @@ export default function UsersPage() {
     <>
       <Header />
       <div className="max-w-xl mx-auto mt-10">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800">Users</h1>
         <ul className="space-y-4">
           {users.map((user) => (
             <li

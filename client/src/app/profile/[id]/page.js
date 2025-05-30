@@ -7,24 +7,25 @@ import Header from "@/components/Header";
 import Image from "next/image";
 
 function ProfilePage() {
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!id) return;
-    fetch(`http://localhost:3001/api/users/${id}`)
+    fetch(`${API_BASE_URL}/api/users/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setUser(data);
         setIsLoading(false);
       });
-  }, [id]);
+  }, [API_BASE_URL, id]);
 
   const handleFollow = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/users/follow/${userId}`,
+        `${API_BASE_URL}/api/users/follow/${userId}`,
         {
           method: "POST",
           credentials: "include",
