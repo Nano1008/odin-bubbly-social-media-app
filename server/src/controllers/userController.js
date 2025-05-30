@@ -36,14 +36,61 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   const userId = req.params.id;
+
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
+      include: {
+        followers: true,
+        following: true,
+        posts: {
+          orderBy: {
+            createdAt: "desc", // Order posts by creation date
+          },
+          include: {
+            author: true,
+            likes: true,
+            comments: {
+              include: {
+                author: true,}
+            }
+          },
+        },
+      },
     });
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    res.status(200).json(user);
+    // Check if the user is self
+    const isSelf = user.id === req.user.id;
+
+    // Check if the current user is following this user
+    const follow = await prisma.follow.findFirst({
+      where: {
+        followingId: user.id,
+        followerId: req.user.id,
+      },
+    });
+    const isFollowing = follow ? true : false;
+
+    // Add likedByCurrentUser field to each post
+    const postsWithLikes = user.posts.map((post) => {
+      const likedByCurrentUser = post.likes.some(
+        (like) => like.userId === req.user.id
+      );
+      return {
+        ...post,
+        likedByCurrentUser,
+      };
+    });
+
+    // Return the user data with follow status and posts
+    user.posts = postsWithLikes;
+    return res.status(200).json({
+      ...user,
+      isSelf,
+      isFollowing,
+    });
   } catch (error) {
     console.error("Error fetching user:", error);
     res.status(500).json({ error: "Can't fetch user" });
@@ -75,7 +122,14 @@ const followUser = async (req, res) => {
           id: existingFollow.id,
         },
       });
-      return res.status(200).json({ followed: false });
+
+      // Return the remaining followers after unfollowing
+      const followers = await prisma.follow.findMany({
+        where: {
+          followingId,
+        },
+      });
+      return res.status(200).json({ followed: false, followers });
     } else {
       // If not following, follow the user
       await prisma.follow.create({
@@ -84,7 +138,14 @@ const followUser = async (req, res) => {
           followerId,
         },
       });
-      return res.status(200).json({ followed: true });
+
+      // Return the remaining followers after following
+      const followers = await prisma.follow.findMany({
+        where: {
+          followingId,
+        },
+      });
+      return res.status(200).json({ followed: true, followers });
     }
   } catch (error) {
     console.error("Error following user:", error);
