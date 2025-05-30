@@ -15,6 +15,12 @@ function ProfilePage() {
   useEffect(() => {
     if (!id) return;
     fetch(`${API_BASE_URL}/api/users/${id}`)
+      .then((res) => {
+        if (res.status === 401) {
+          window.location.href = "/signin"; // Redirect to login page if not authenticated
+          return;
+        }
+      })
       .then((res) => res.json())
       .then((data) => {
         setUser(data);

@@ -13,8 +13,9 @@ function Header() {
         const response = await fetch(`${API_BASE_URL}/auth/current_user`, {
           credentials: "include",
         });
-        if (!response.ok) {
-          throw new Error("Not authenticated");
+        if (response.status === 401) {
+          window.location.href = "/signin"; // Redirect to login page if not authenticated
+          return;
         }
         const data = await response.json();
         setUser(data);
@@ -28,8 +29,19 @@ function Header() {
   }, [API_BASE_URL]);
 
   const handleLogout = () => {
-    // Implement logout logic here, e.g., clear session, redirect to login
-    console.log("User logged out");
+    fetch(`${API_BASE_URL}/auth/logout`, {
+      credentials: "include",
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = "/signin"; // Redirect to login page
+        } else {
+          throw new Error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Logout error:", error);
+      });
   };
   if (isLoading) {
     return <div className="text-center mt-8">Loading...</div>;
