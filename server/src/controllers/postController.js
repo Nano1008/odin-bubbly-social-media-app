@@ -30,6 +30,11 @@ const getFeed = async (req, res) => {
       select: { followingId: true },
     });
 
+    // If the user is not following anyone, return an empty array
+    if (following.length === 0) {
+      return res.status(200).json([]);
+    }
+
     const followingIds = following.map((follow) => follow.followingId);
 
     // Fetch posts from followed users
