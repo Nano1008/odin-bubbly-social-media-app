@@ -23,7 +23,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      secure: true, // Use secure cookies in production
+      httpOnly: true,
+      sameSite: "none", // Adjust based on your needs
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
   })
