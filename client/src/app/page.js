@@ -10,9 +10,25 @@ function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/is_authenticated`, {
+          credentials: "include",
+        });
+        const result = await response.json();
+        if (!result.isAuthenticated) {
+          window.location.href = "/signin"; // Redirect to login page if not authenticated
+          return;
+        }
+      } catch (error) {
+        console.error("Authentication error:", error);
+      }
+    };
     const fetchPosts = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/posts/feed`);
+        const response = await fetch(`${API_BASE_URL}/api/posts/feed`, {
+          credentials: "include",
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
         }
@@ -22,7 +38,7 @@ function Home() {
         console.error("Error fetching posts:", error);
       }
     };
-
+    checkAuth();
     fetchPosts();
   }, [API_BASE_URL]);
 

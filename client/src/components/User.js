@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function User({ id, profilePicture, name, username }) {
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   return (
     <div className="flex items-center gap-3">
       <Image

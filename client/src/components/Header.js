@@ -8,16 +8,11 @@ function Header() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    // Check if user is authenticated
-    const checkAuth = async () => {
+    const getUser = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/auth/current_user`, {
           credentials: "include",
         });
-        if (response.status === 401) {
-          window.location.href = "/signin"; // Redirect to login page if not authenticated
-          return;
-        }
         const data = await response.json();
         setUser(data);
         setIsLoading(false);
@@ -25,8 +20,7 @@ function Header() {
         console.error("Authentication check failed:", error);
       }
     };
-
-    checkAuth();
+    getUser();
   }, [API_BASE_URL]);
 
   const handleLogout = () => {

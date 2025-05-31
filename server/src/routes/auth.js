@@ -34,4 +34,12 @@ router.get("/current_user", (req, res) => {
   return res.status(401).json({ message: "Unauthorized" });
 });
 
+// Check if user is authenticated
+router.get("/is_authenticated", (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.json({ isAuthenticated: true });
+  }
+  return res.json({ isAuthenticated: false });
+});
+
 module.exports = router;

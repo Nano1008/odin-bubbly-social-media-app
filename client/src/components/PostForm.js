@@ -17,6 +17,7 @@ function PostForm() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ content }),
+      credentials: "include",
     });
 
     if (res.ok) {
