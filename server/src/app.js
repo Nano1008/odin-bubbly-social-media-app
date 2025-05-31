@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://bubbly-lovat.vercel.app", // frontend origin
+    origin: ["https://bubbly-lovat.vercel.app", "http://localhost:3000"], // frontend origin
     credentials: true,
   })
 );
