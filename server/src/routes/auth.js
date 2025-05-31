@@ -15,8 +15,11 @@ router.get(
   "/github/callback",
   passport.authenticate("github", {
     failureRedirect: "https://bubbly-lovat.vercel.app/signin",
-    successRedirect: "https://bubbly-lovat.vercel.app/",
-  })
+    session: true,
+  }),
+  (req, res) => {
+    res.redirect("https://bubbly-lovat.vercel.app");
+  }
 );
 
 // Logout route
