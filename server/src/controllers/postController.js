@@ -24,7 +24,7 @@ const createPost = async (req, res) => {
 const getFeed = async (req, res) => {
   const userId = req.user.id;
   try {
-    // Get the IDs of users the current user follows
+    // Get the IDs of users the current user is following
     const following = await prisma.follow.findMany({
       where: { followerId: userId },
       select: { followingId: true },

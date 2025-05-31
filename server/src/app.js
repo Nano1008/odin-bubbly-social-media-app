@@ -37,7 +37,7 @@ app.use(passport.session());
 if (process.env.NODE_ENV === "development") {
   app.use((req, res, next) => {
     if (!req.user) {
-      req.user = { id: "cmb6u33050005s81u7zddgwwl" };
+      req.user = { id: "cmb6u32oo0000s81uzu0ziyw1" };
     }
     next();
   });

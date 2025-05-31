@@ -14,10 +14,8 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    failureMessage: "Login failed",
-    successMessage: "Logged in successfully",
-    // failureRedirect: "/",
-    // successRedirect: "/api",
+    failureRedirect: "http://localhost:3000/signin",
+    successRedirect: "http://localhost:3000/",
   })
 );
 
