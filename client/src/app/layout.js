@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Bubbly",
-  description: "A Social Media App",
+  description: "Connect with gentle souls",
 };
 
 export default function RootLayout({ children }) {

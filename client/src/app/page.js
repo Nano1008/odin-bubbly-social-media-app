@@ -27,9 +27,9 @@ function Home() {
   }, [API_BASE_URL]);
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100">
       <Header />
-      <div className="max-w-xl mx-auto mt-10 space-y-6">
+      <div className="max-w-2xl mx-auto pt-6 pb-24 px-4 space-y-6">
         <PostForm />
         {posts.map((post) => (
           <Post
@@ -45,7 +45,7 @@ function Home() {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

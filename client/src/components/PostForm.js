@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Plus } from "lucide-react";
 
-function PostForm({ onPostCreated }) {
+function PostForm() {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const [content, setContent] = useState("");
 
@@ -29,27 +30,29 @@ function PostForm({ onPostCreated }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mb-4 p-4 border rounded-xl bg-white shadow"
-    >
-      <textarea
-        className="w-full border p-2 rounded mb-2"
-        rows="3"
-        placeholder="What's on your mind?"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        required
-      />
+    <div className="bg-white/70 backdrop-blur-sm border border-white/50 rounded-2xl p-6 shadow-lg">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <textarea
+          className="w-full p-4 bg-white/50 border border-white/50 rounded-2xl focus:outline-none focus:border-purple-300 transition-all duration-300 resize-none"
+          rows="3"
+          placeholder="What's bubbling in your mind?"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+        />
 
-      <button
-        type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
-        disabled={loading}
-      >
-        {loading ? "Posting..." : "Post"}
-      </button>
-    </form>
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-pink-300 to-purple-300 hover:from-pink-400 hover:to-purple-400 text-white font-semibold rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading}
+          >
+            <Plus size={18} />
+            <span>{loading ? "Posting..." : "Share"}</span>
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 
