@@ -2,6 +2,7 @@
 
 import Post from "@/components/Post";
 import Header from "@/components/Header";
+import PostForm from "@/components/PostForm";
 import { useEffect, useState } from "react";
 
 function Home() {
@@ -29,6 +30,7 @@ function Home() {
     <>
       <Header />
       <div className="max-w-xl mx-auto mt-10 space-y-6">
+        <PostForm />
         {posts.map((post) => (
           <Post
             key={post.id}

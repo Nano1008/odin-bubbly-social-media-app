@@ -18,10 +18,14 @@ function ProfilePage() {
       .then((res) => {
         if (res.status === 401) {
           window.location.href = "/signin"; // Redirect to login page if not authenticated
-          return;
+          return null;
         }
+        return res;
       })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res) return;
+        return res.json();
+      })
       .then((data) => {
         setUser(data);
         setIsLoading(false);

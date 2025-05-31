@@ -13,7 +13,7 @@ const createPost = async (req, res) => {
         authorId: req.user.id, // Assuming req.user is set by requireAuth middleware
       },
     });
-    res.status(201).json({ message: "Post created successfully" });
+    res.status(201).json({ post });
   } catch (error) {
     console.error("Error creating post:", error);
     res.status(500).json({ error: "Failed to create post" });
