@@ -178,6 +178,10 @@ const config = {
         "fromEnvVar": null,
         "value": "darwin-arm64",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -195,6 +199,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -203,8 +208,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id             String    @id @default(cuid())\n  githubId       String    @unique\n  username       String\n  name           String?\n  email          String?   @unique\n  profilePicture String?\n  posts          Post[]\n  comments       Comment[]\n  likes          Like[]\n  followers      Follow[]  @relation(\"UserFollowers\")\n  following      Follow[]  @relation(\"UserFollowing\")\n  createdAt      DateTime  @default(now())\n}\n\nmodel Post {\n  id        String    @id @default(cuid())\n  content   String\n  imageUrl  String?\n  author    User      @relation(fields: [authorId], references: [id])\n  authorId  String\n  comments  Comment[]\n  likes     Like[]\n  createdAt DateTime  @default(now())\n}\n\nmodel Comment {\n  id        String   @id @default(cuid())\n  content   String\n  post      Post     @relation(fields: [postId], references: [id])\n  postId    String\n  author    User     @relation(fields: [authorId], references: [id])\n  authorId  String\n  createdAt DateTime @default(now())\n}\n\nmodel Like {\n  id        String   @id @default(cuid())\n  user      User     @relation(fields: [userId], references: [id])\n  userId    String\n  post      Post     @relation(fields: [postId], references: [id])\n  postId    String\n  createdAt DateTime @default(now())\n}\n\n// Each row means \"user with followerId is following user with followingId.\"\nmodel Follow {\n  id          String   @id @default(cuid())\n  follower    User     @relation(\"UserFollowing\", fields: [followerId], references: [id])\n  followerId  String\n  following   User     @relation(\"UserFollowers\", fields: [followingId], references: [id])\n  followingId String\n  createdAt   DateTime @default(now())\n}\n",
-  "inlineSchemaHash": "e160a8ac7b145162126be8e69d7006d066b63d57686669e7dff53f5609bf8581",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id             String    @id @default(cuid())\n  githubId       String    @unique\n  username       String\n  name           String?\n  email          String?   @unique\n  profilePicture String?\n  posts          Post[]\n  comments       Comment[]\n  likes          Like[]\n  followers      Follow[]  @relation(\"UserFollowers\")\n  following      Follow[]  @relation(\"UserFollowing\")\n  createdAt      DateTime  @default(now())\n}\n\nmodel Post {\n  id        String    @id @default(cuid())\n  content   String\n  imageUrl  String?\n  author    User      @relation(fields: [authorId], references: [id])\n  authorId  String\n  comments  Comment[]\n  likes     Like[]\n  createdAt DateTime  @default(now())\n}\n\nmodel Comment {\n  id        String   @id @default(cuid())\n  content   String\n  post      Post     @relation(fields: [postId], references: [id])\n  postId    String\n  author    User     @relation(fields: [authorId], references: [id])\n  authorId  String\n  createdAt DateTime @default(now())\n}\n\nmodel Like {\n  id        String   @id @default(cuid())\n  user      User     @relation(fields: [userId], references: [id])\n  userId    String\n  post      Post     @relation(fields: [postId], references: [id])\n  postId    String\n  createdAt DateTime @default(now())\n}\n\n// Each row means \"user with followerId is following user with followingId.\"\nmodel Follow {\n  id          String   @id @default(cuid())\n  follower    User     @relation(\"UserFollowing\", fields: [followerId], references: [id])\n  followerId  String\n  following   User     @relation(\"UserFollowers\", fields: [followingId], references: [id])\n  followingId String\n  createdAt   DateTime @default(now())\n}\n",
+  "inlineSchemaHash": "05a810d8833f82e73b4f8b8fd910571425fece2d663719e881d7cde62f27082b",
   "copyEngine": true
 }
 
@@ -245,6 +250,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
 path.join(process.cwd(), "generated/prisma/libquery_engine-darwin-arm64.dylib.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "generated/prisma/schema.prisma")
