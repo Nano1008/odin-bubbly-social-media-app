@@ -14,8 +14,8 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    failureRedirect: "http://localhost:3000/signin",
-    successRedirect: "http://localhost:3000/",
+    failureRedirect: "https://bubbly-lovat.vercel.app/signin",
+    successRedirect: "https://bubbly-lovat.vercel.app/",
   })
 );
 
