@@ -23,8 +23,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true, // Use secure cookies in production
-      httpOnly: true,
+      secure: false, // Use secure cookies in production
+      // httpOnly: true,
       sameSite: "none", // Adjust based on your needs
     },
   })
