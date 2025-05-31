@@ -11,7 +11,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "/auth/github/callback",
+      callbackURL: "https://bubbly-api-6y8x.onrender.com/auth/github/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       const user = await prisma.user.upsert({
