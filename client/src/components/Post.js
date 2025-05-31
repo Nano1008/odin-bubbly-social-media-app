@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 import { Heart, MessageCircle, Send } from "lucide-react";
 import { useState } from "react";
 
@@ -68,7 +69,11 @@ function Post({
             alt={author.name}
             className="w-10 h-10 rounded-full ring-2 ring-white/50"
           />
-          <span className="font-semibold text-gray-700">{author.name}</span>
+          <Link href={`/profile/${author.id}`}>
+            <span className="font-semibold text-gray-700">
+              {author.name || author.username}{" "}
+            </span>
+          </Link>
         </div>
         <p className="text-sm text-gray-500">
           {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
