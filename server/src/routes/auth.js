@@ -14,11 +14,11 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    failureRedirect: "https://bubbly-lovat.vercel.app/signin",
+    failureRedirect: "http://localhost:3000/signin",
     session: true,
   }),
   (req, res) => {
-    res.redirect("https://bubbly-lovat.vercel.app");
+    res.redirect("http://localhost:3000");
   }
 );
 
