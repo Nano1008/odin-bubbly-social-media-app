@@ -10,10 +10,10 @@ const createPost = async (req, res) => {
     const post = await prisma.post.create({
       data: {
         content,
-        authorId: req.user.id, // Assuming req.user is set by requireAuth middleware
+        authorId: req.user.id,
       },
     });
-    res.status(201).json({ post });
+    return res.status(201).json({ post });
   } catch (error) {
     console.error("Error creating post:", error);
     res.status(500).json({ error: "Failed to create post" });
@@ -71,7 +71,7 @@ const getFeed = async (req, res) => {
     });
 
     // Return the posts
-    res.status(200).json(postsWithLikes);
+    return res.status(200).json({ postsWithLikes });
   } catch (error) {
     console.error("Error fetching feed:", error);
     res.status(500).json({ error: "Failed to fetch feed" });
@@ -141,7 +141,7 @@ const commentOnPost = async (req, res) => {
         author: true, // Include author details in the response
       },
     });
-    res.status(201).json({ comment });
+    return res.status(201).json({ comment });
   } catch (error) {
     console.error("Error adding comment:", error);
     res.status(500).json({ error: "Failed to add comment" });

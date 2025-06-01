@@ -1,5 +1,5 @@
 // Github OAuth Strategy Configuration using Passport.js
-require("dotenv").config({path: require("path").resolve(__dirname, "../.env")});
+require("dotenv").config();
 const GithubStrategy = require("passport-github2").Strategy;
 const passport = require("passport");
 const { PrismaClient } = require("../../generated/prisma");
@@ -11,7 +11,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "https://bubbly-api-6y8x.onrender.com/auth/github/callback",
+      callbackURL: `${process.env.BACKEND_URL}/auth/github/callback`,
     },
     async (accessToken, refreshToken, profile, done) => {
       const user = await prisma.user.upsert({

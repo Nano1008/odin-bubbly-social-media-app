@@ -51,8 +51,8 @@ function Post({
     });
 
     if (res.ok) {
-      const newComment = await res.json();
-      setCommentsList((prev) => [newComment.comment, ...prev]);
+      const data = await res.json();
+      setCommentsList((prev) => [data.comment, ...prev]);
       setCommentInput("");
     }
   };

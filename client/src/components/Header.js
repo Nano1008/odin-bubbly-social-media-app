@@ -14,7 +14,7 @@ function Header() {
           credentials: "include",
         });
         const data = await response.json();
-        setUser(data);
+        setUser(data.currentUser);
         setIsLoading(false);
       } catch (error) {
         console.error("Authentication check failed:", error);
@@ -28,11 +28,7 @@ function Header() {
       credentials: "include",
     })
       .then((response) => {
-        if (response.ok) {
-          window.location.href = "/signin"; // Redirect to login page
-        } else {
-          throw new Error("Logout failed");
-        }
+        window.location.href = "/signin";
       })
       .catch((error) => {
         console.error("Logout error:", error);

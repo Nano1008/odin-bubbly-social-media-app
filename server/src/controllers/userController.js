@@ -27,7 +27,7 @@ const getAllUsers = async (req, res) => {
           : "not following",
       };
     });
-    res.status(200).json(usersWithFollowStatus);
+    return res.status(200).json({ usersWithFollowStatus });
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ error: "Can't fetch users" });

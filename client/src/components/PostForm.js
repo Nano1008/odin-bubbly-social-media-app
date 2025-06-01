@@ -4,7 +4,6 @@ import { Plus } from "lucide-react";
 function PostForm() {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const [content, setContent] = useState("");
-
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {

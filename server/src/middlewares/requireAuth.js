@@ -5,7 +5,7 @@ const requireAuth = (req, res, next) => {
   }
 
   // If not authenticated, return an error response
-  res.status(401).json({ error: "Unauthorized access. Please log in." });
+  res.status(401).json({ requireAuthMiddleware: "Unauthorized" });
 };
 
 module.exports = requireAuth;

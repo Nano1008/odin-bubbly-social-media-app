@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://bubbly-lovat.vercel.app", "http://localhost:3000"], // frontend origin
+    origin: ["https://bubbly-lovat.vercel.app", "http://localhost:3000"],
     credentials: true,
   })
 );
@@ -23,9 +23,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // Use secure cookies in production
-      // httpOnly: true,
-      sameSite: "none", // Adjust based on your needs
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
   })
 );
@@ -33,6 +33,19 @@ app.use(
 // Passport configuration
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Mock authentication for development
+if (process.env.NODE_ENV !== "production") {
+  app.use((req, res, next) => {
+    if (!req.user) {
+      req.user = {
+        id: "cmb6u32yj0004s81ubb2efgxn",
+      };
+      
+    }
+    next();
+  });
+}
 
 // Routes
 app.use(require("./routes/index"));

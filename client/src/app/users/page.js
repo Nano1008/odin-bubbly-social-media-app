@@ -13,11 +13,8 @@ export default function UsersPage() {
         const response = await fetch(`${API_BASE_URL}/api/users`, {
           credentials: "include",
         });
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
         const data = await response.json();
-        setUsers(data);
+        setUsers(data.usersWithFollowStatus);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -34,9 +31,6 @@ export default function UsersPage() {
           credentials: "include",
         }
       );
-      if (!response.ok) {
-        throw new Error("Failed to follow/unfollow user");
-      }
       const data = await response.json();
       setUsers((prevUsers) =>
         prevUsers.map((user) =>

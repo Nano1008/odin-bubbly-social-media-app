@@ -17,7 +17,7 @@ function Home() {
         });
         const result = await response.json();
         if (!result.isAuthenticated) {
-          window.location.href = "/signin"; // Redirect to login page if not authenticated
+          window.location.href = "/signin";
           return;
         }
       } catch (error) {
@@ -29,11 +29,8 @@ function Home() {
         const response = await fetch(`${API_BASE_URL}/api/posts/feed`, {
           credentials: "include",
         });
-        if (!response.ok) {
-          throw new Error("Failed to fetch posts");
-        }
         const data = await response.json();
-        setPosts(data);
+        setPosts(data.postsWithLikes);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }

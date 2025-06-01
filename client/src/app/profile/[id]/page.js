@@ -17,16 +17,7 @@ function ProfilePage() {
     fetch(`${API_BASE_URL}/api/users/${id}`, {
       credentials: "include",
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-        return res;
-      })
-      .then((res) => {
-        if (!res) return;
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
         setUser(data);
         setIsLoading(false);
@@ -42,9 +33,6 @@ function ProfilePage() {
           credentials: "include",
         }
       );
-      if (!response.ok) {
-        throw new Error("Failed to follow/unfollow user");
-      }
       const data = await response.json();
       setUser((prevUser) => ({
         ...prevUser,

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
@@ -14,11 +15,10 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    failureRedirect: "http://localhost:3000/signin",
-    session: true,
+    failureRedirect: `${process.env.FRONDEND_URL}/signin`,
   }),
   (req, res) => {
-    res.redirect("http://localhost:3000");
+    res.redirect(`${process.env.FRONTEND_URL}`);
   }
 );
 
@@ -32,12 +32,15 @@ router.get("/logout", (req, res) => {
 // Get current user route
 router.get("/current_user", (req, res) => {
   if (req.user) {
-    return res.json(req.user);
+    const currentUser = req.user;
+    return res.json({ currentUser });
   }
-  return res.status(401).json({ message: "Unauthorized" });
+  return res
+    .status(401)
+    .json({ APIAuthCurrent_user: "Request user not exist" });
 });
 
-// Check if user is authenticated
+// Check if user is logged in
 router.get("/is_authenticated", (req, res) => {
   if (req.isAuthenticated()) {
     return res.json({ isAuthenticated: true });
