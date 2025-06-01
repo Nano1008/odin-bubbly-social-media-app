@@ -41,7 +41,6 @@ if (process.env.NODE_ENV !== "production") {
       req.user = {
         id: "cmb6u32yj0004s81ubb2efgxn",
       };
-      
     }
     next();
   });

@@ -3,6 +3,11 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
+// Test the GitHub authentication strategy
+// router.get("/", (req, res) =>
+//   res.send('<a href="/auth/github">Login with GitHub</a>')
+// );
+
 // Login route
 router.get(
   "/github",
@@ -15,10 +20,11 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    failureRedirect: `${process.env.FRONDEND_URL}/signin`,
+    failureRedirect: `${process.env.FRONTEND_URL}/signin`,
   }),
   (req, res) => {
-    res.redirect(`${process.env.FRONTEND_URL}`);
+    console.log("Authenticated:", req.user);
+    res.redirect(`${process.env.FRONTEND_URL}/`);
   }
 );
 
@@ -47,5 +53,18 @@ router.get("/is_authenticated", (req, res) => {
   }
   return res.json({ isAuthenticated: false });
 });
+
+// Test Github authentication strategy
+// router.get("/profile", (req, res) => {
+//   console.log("Session user:", req.user);
+//   if (!req.isAuthenticated()) return res.redirect("/auth");
+//   res.send(
+//     `<h1>Hello, ${req.user.username}</h1><pre>${JSON.stringify(
+//       req.user,
+//       null,
+//       2
+//     )}</pre>`
+//   );
+// });
 
 module.exports = router;
