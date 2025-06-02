@@ -49,7 +49,7 @@ function Header() {
       <div className="max-w-2xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
+          <Link href="/feed" className="flex items-center space-x-3">
             <div className="text-2xl">🫧</div>
             <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-600 bg-clip-text text-transparent">
               Bubbly
@@ -59,7 +59,7 @@ function Header() {
           {/* Navigation */}
           <nav className="flex items-center space-x-2">
             <Link
-              href="/"
+              href="/feed"
               className="p-2 hover:bg-purple-100 rounded-xl transition-colors group"
             >
               <Home
