@@ -20,11 +20,10 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    failureRedirect: `${process.env.FRONTEND_URL}/signin`,
+    failureRedirect: `${process.env.FRONTEND_URL}/`,
   }),
   (req, res) => {
-    console.log("Authenticated:", req.user);
-    res.redirect(`${process.env.FRONTEND_URL}/`);
+    res.redirect(`${process.env.FRONTEND_URL}/feed`);
   }
 );
 

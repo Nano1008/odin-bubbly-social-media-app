@@ -28,7 +28,7 @@ function Header() {
       credentials: "include",
     })
       .then((response) => {
-        window.location.href = "/signin";
+        window.location.href = "/";
       })
       .catch((error) => {
         console.error("Logout error:", error);
