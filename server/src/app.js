@@ -7,6 +7,7 @@ const passport = require("passport");
 
 const app = express();
 
+app.set("trust proxy", 1);
 app.use(
   cors({
     origin: ["https://bubbly-lovat.vercel.app", "http://localhost:3000"],
@@ -25,7 +26,7 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
   })
 );
