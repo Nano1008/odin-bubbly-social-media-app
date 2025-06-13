@@ -36,11 +36,25 @@ function Header() {
   };
   if (isLoading) {
     return (
-      <div className="bg-white/70 backdrop-blur-sm border-b border-white/50 shadow-lg">
+      <header className="bg-white/70 backdrop-blur-sm border-b border-white/50 shadow-lg sticky top-0 z-40">
         <div className="max-w-2xl mx-auto px-4 py-4">
-          <div className="text-center text-gray-500">Loading...</div>
+          <div className="flex items-center justify-between">
+            {/* Logo Skeleton */}
+            <div className="flex items-center space-x-3 animate-pulse">
+              <div className="w-8 h-8 bg-gray-200 rounded-full" />
+              <div className="w-24 h-6 bg-gray-200 rounded" />
+            </div>
+            {/* Navigation Skeleton */}
+            <nav className="flex items-center space-x-2 animate-pulse">
+              <div className="w-8 h-8 bg-gray-200 rounded-xl" />
+              <div className="w-8 h-8 bg-gray-200 rounded-xl" />
+              <div className="w-8 h-8 bg-gray-200 rounded-xl" />
+              <div className="w-px h-6 bg-gray-200 mx-2"></div>
+              <div className="w-8 h-8 bg-gray-200 rounded-xl" />
+            </nav>
+          </div>
         </div>
-      </div>
+      </header>
     );
   }
 
