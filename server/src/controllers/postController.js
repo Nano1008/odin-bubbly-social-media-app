@@ -32,7 +32,7 @@ const getFeed = async (req, res) => {
 
     // If the user is not following anyone, return an empty array
     if (following.length === 0) {
-      return res.status(200).json([]);
+      return res.status(200).json({ postsWithLikes: [] });
     }
 
     const followingIds = following.map((follow) => follow.followingId);
