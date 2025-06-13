@@ -27,6 +27,25 @@ router.get(
   }
 );
 
+// Google OAuth route
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
+// Google OAuth callback route
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: `${process.env.FRONTEND_URL}/`,
+  }),
+  (req, res) => {
+    res.redirect(`${process.env.FRONTEND_URL}/feed`);
+  }
+);
+
 // Logout route
 router.get("/logout", (req, res) => {
   req.logout((err) => {

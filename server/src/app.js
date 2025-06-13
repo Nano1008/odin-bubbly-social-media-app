@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("./middlewares/github");
+require("./middlewares/google");
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");

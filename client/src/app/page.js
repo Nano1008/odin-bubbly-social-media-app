@@ -1,12 +1,17 @@
 "use client";
 
 import GithubIcon from "@/components/GithubIcon";
+import GoogleIcon from "@/components/GoogleIcon";
 
 function SignInPage() {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const handleSignIn = () => {
     // Redirect to the GitHub OAuth URL
     window.location.href = `${API_BASE_URL}/auth/github`;
+  };
+  const handleSignInGoogle = () => {
+    // Redirect to the Google OAuth URL
+    window.location.href = `${API_BASE_URL}/auth/google`;
   };
 
   return (
@@ -20,13 +25,22 @@ function SignInPage() {
           <p className="text-gray-500 text-sm">Connect with gentle souls</p>
         </div>
 
-        <button
-          onClick={handleSignIn}
-          className="w-full p-4 bg-gradient-to-r from-gray-700 to-gray-900 hover:from-gray-800 hover:to-black text-white font-semibold rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
-        >
-          <GithubIcon />
-          <span>Sign in with GitHub</span>
-        </button>
+        <div className="space-y-4">
+          <button
+            onClick={handleSignIn}
+            className="w-full p-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold rounded-2xl border border-gray-200 shadow-sm transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
+          >
+            <GithubIcon />
+            <span>Sign in with GitHub</span>
+          </button>
+          <button
+            onClick={handleSignInGoogle}
+            className="w-full p-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold rounded-2xl border border-gray-200 shadow-sm transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
+          >
+            <GoogleIcon />
+            <span>Sign in with Google</span>
+          </button>
+        </div>
       </div>
     </div>
   );
