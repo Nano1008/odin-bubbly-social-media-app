@@ -1352,6 +1352,7 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     githubId: string | null
+    googleId: string | null
     username: string | null
     name: string | null
     email: string | null
@@ -1362,6 +1363,7 @@ export namespace Prisma {
   export type UserMaxAggregateOutputType = {
     id: string | null
     githubId: string | null
+    googleId: string | null
     username: string | null
     name: string | null
     email: string | null
@@ -1372,6 +1374,7 @@ export namespace Prisma {
   export type UserCountAggregateOutputType = {
     id: number
     githubId: number
+    googleId: number
     username: number
     name: number
     email: number
@@ -1384,6 +1387,7 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     githubId?: true
+    googleId?: true
     username?: true
     name?: true
     email?: true
@@ -1394,6 +1398,7 @@ export namespace Prisma {
   export type UserMaxAggregateInputType = {
     id?: true
     githubId?: true
+    googleId?: true
     username?: true
     name?: true
     email?: true
@@ -1404,6 +1409,7 @@ export namespace Prisma {
   export type UserCountAggregateInputType = {
     id?: true
     githubId?: true
+    googleId?: true
     username?: true
     name?: true
     email?: true
@@ -1486,7 +1492,8 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
-    githubId: string
+    githubId: string | null
+    googleId: string | null
     username: string
     name: string | null
     email: string | null
@@ -1514,6 +1521,7 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     githubId?: boolean
+    googleId?: boolean
     username?: boolean
     name?: boolean
     email?: boolean
@@ -1530,6 +1538,7 @@ export namespace Prisma {
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     githubId?: boolean
+    googleId?: boolean
     username?: boolean
     name?: boolean
     email?: boolean
@@ -1540,6 +1549,7 @@ export namespace Prisma {
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     githubId?: boolean
+    googleId?: boolean
     username?: boolean
     name?: boolean
     email?: boolean
@@ -1550,6 +1560,7 @@ export namespace Prisma {
   export type UserSelectScalar = {
     id?: boolean
     githubId?: boolean
+    googleId?: boolean
     username?: boolean
     name?: boolean
     email?: boolean
@@ -1557,7 +1568,7 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "githubId" | "username" | "name" | "email" | "profilePicture" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "githubId" | "googleId" | "username" | "name" | "email" | "profilePicture" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | User$postsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
@@ -1580,7 +1591,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      githubId: string
+      githubId: string | null
+      googleId: string | null
       username: string
       name: string | null
       email: string | null
@@ -2016,6 +2028,7 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly githubId: FieldRef<"User", 'String'>
+    readonly googleId: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
@@ -6852,6 +6865,7 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     githubId: 'githubId',
+    googleId: 'googleId',
     username: 'username',
     name: 'name',
     email: 'email',
@@ -6983,7 +6997,8 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
-    githubId?: StringFilter<"User"> | string
+    githubId?: StringNullableFilter<"User"> | string | null
+    googleId?: StringNullableFilter<"User"> | string | null
     username?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
     email?: StringNullableFilter<"User"> | string | null
@@ -6998,7 +7013,8 @@ export namespace Prisma {
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    githubId?: SortOrder
+    githubId?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     username?: SortOrder
     name?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
@@ -7014,6 +7030,7 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     githubId?: string
+    googleId?: string
     email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -7027,11 +7044,12 @@ export namespace Prisma {
     likes?: LikeListRelationFilter
     followers?: FollowListRelationFilter
     following?: FollowListRelationFilter
-  }, "id" | "githubId" | "email">
+  }, "id" | "githubId" | "googleId" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    githubId?: SortOrder
+    githubId?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     username?: SortOrder
     name?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
@@ -7047,7 +7065,8 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
-    githubId?: StringWithAggregatesFilter<"User"> | string
+    githubId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    googleId?: StringNullableWithAggregatesFilter<"User"> | string | null
     username?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -7282,7 +7301,8 @@ export namespace Prisma {
 
   export type UserCreateInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -7297,7 +7317,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -7312,7 +7333,8 @@ export namespace Prisma {
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7327,7 +7349,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7342,7 +7365,8 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -7352,7 +7376,8 @@ export namespace Prisma {
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7362,7 +7387,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7670,6 +7696,7 @@ export namespace Prisma {
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     githubId?: SortOrder
+    googleId?: SortOrder
     username?: SortOrder
     name?: SortOrder
     email?: SortOrder
@@ -7680,6 +7707,7 @@ export namespace Prisma {
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     githubId?: SortOrder
+    googleId?: SortOrder
     username?: SortOrder
     name?: SortOrder
     email?: SortOrder
@@ -7690,6 +7718,7 @@ export namespace Prisma {
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     githubId?: SortOrder
+    googleId?: SortOrder
     username?: SortOrder
     name?: SortOrder
     email?: SortOrder
@@ -8602,7 +8631,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutPostsInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -8616,7 +8646,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutPostsInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -8692,7 +8723,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutPostsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8706,7 +8738,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutPostsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8775,7 +8808,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutCommentsInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -8789,7 +8823,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutCommentsInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -8848,7 +8883,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutCommentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8862,7 +8898,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8876,7 +8913,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutLikesInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -8890,7 +8928,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutLikesInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -8943,7 +8982,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutLikesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8957,7 +8997,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutLikesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9000,7 +9041,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutFollowingInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -9014,7 +9056,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutFollowingInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -9033,7 +9076,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutFollowersInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -9047,7 +9091,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutFollowersInput = {
     id?: string
-    githubId: string
+    githubId?: string | null
+    googleId?: string | null
     username: string
     name?: string | null
     email?: string | null
@@ -9077,7 +9122,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutFollowingInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9091,7 +9137,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutFollowingInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9116,7 +9163,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutFollowersInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9130,7 +9178,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutFollowersInput = {
     id?: StringFieldUpdateOperationsInput | string
-    githubId?: StringFieldUpdateOperationsInput | string
+    githubId?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     username?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
