@@ -90,15 +90,17 @@ function Header() {
                 className="text-purple-600 group-hover:text-purple-700"
               />
             </Link>
-            <Link
-              href={`/profile/${user.id}`}
-              className="p-2 hover:bg-purple-100 rounded-xl transition-colors group"
-            >
-              <User
-                size={20}
-                className="text-purple-600 group-hover:text-purple-700"
-              />
-            </Link>
+            {user && (
+              <Link
+                href={`/profile/${user.id}`}
+                className="p-2 hover:bg-purple-100 rounded-xl transition-colors group"
+              >
+                <User
+                  size={20}
+                  className="text-purple-600 group-hover:text-purple-700"
+                />
+              </Link>
+            )}
 
             <div className="w-px h-6 bg-gray-300 mx-2"></div>
 
