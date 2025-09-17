@@ -29,7 +29,7 @@ function Home() {
       <Header />
       <div className="max-w-2xl mx-auto pt-6 pb-24 px-4 space-y-6">
         <PostForm />
-        {posts.map((post) => (
+        {posts && posts.map((post) => (
           <Post
             key={post.id}
             id={post.id}
